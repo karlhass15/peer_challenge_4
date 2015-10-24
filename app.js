@@ -8,12 +8,10 @@ var indexTracker = 0;
 $(document).ready(function(){
     createCarousel(peopleArray);
 
-    updateIndexPoints();
-
     $("#next").on('click', nextSlide);
     $("#prev").on('click', prevSlide);
-    updateMain();
-
+    //updateMain();
+    updateIndexPoints();
 });
 
 function createCarousel(array){
@@ -22,29 +20,25 @@ function createCarousel(array){
     createNavButtons($el);
     createIndexPoints(array, $el);
 }
-
+function createNavButtons($el){
+    $el.append("<div id='prev' class='nav-button'>Prev</div>");
+    $el.append("<div id='next' class='nav-button'>Next</div>");
+}
 function nextSlide(){
     indexTracker++;
     if(indexTracker >= peopleArray.length){
         indexTracker = 0;
     }
-
-    updateMain();
+    //updateMain();
     updateIndexPoints();
 }
-
 function prevSlide(){
     indexTracker--;
     if(indexTracker < 0){
         indexTracker = peopleArray.length - 1;
     }
-
-    updateMain();
+    //updateMain();
     updateIndexPoints();
-}
-
-function createNavButtons($el){
-    $el.append("<div id='prev' class='nav-button'>Prev</div>");
 }
 
 function createIndexPoints(array, $el){
@@ -53,22 +47,19 @@ function createIndexPoints(array, $el){
         //we need i, 1 for each element
         $el.append("<div class='index-point' id='index" + i + "'></div>")
     }
-    $el.append("<div id='next' class='nav-button'>Next</div>");
 }
-
-
-
 function updateIndexPoints(){
     for(var i = 0; i < peopleArray.length; i++){
         $("#index" + i).removeClass("index-point-active");
-
+        //added updateMain function to this one since it follows the same calls as updateIndexPoints
+        $("#mainContent").text(peopleArray[indexTracker]);
         if(i == indexTracker){
             $("#index" + i).addClass("index-point-active");
         }
     }
 }
 
-function updateMain(){
-    $("#mainContent").text(peopleArray[indexTracker]);
-}
+//function updateMain(){
+   // $("#mainContent").text(peopleArray[indexTracker]);
+//}
 
